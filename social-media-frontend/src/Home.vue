@@ -23,6 +23,7 @@
           v-model="content"
           placeholder="你在想什麼..."
           style="width: 100%;"
+          @keyup.enter="createPost"
       />
 
       <button @click="createPost">
@@ -56,7 +57,15 @@
           :key="comment.commentId"
           style="margin-top: 5px; padding-left: 10px;"
       >
-        💬 {{ comment.content }}
+
+        <small>
+          userId: {{ comment.userId }}
+        </small>
+
+        <div>
+          💬 {{ comment.content }}
+        </div>
+
       </div>
 
       <!-- ⭐ 留言輸入 -->
@@ -65,6 +74,7 @@
         <input
             v-model="commentMap[post.postId]"
             placeholder="留言..."
+            @keyup.enter="createComment(post.postId)"
         />
 
         <button @click="createComment(post.postId)">

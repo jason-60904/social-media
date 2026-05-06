@@ -13,6 +13,13 @@
     <button @click="login">
       登入
     </button>
+
+    <br /><br />
+
+    <router-link to="/register">
+      沒有帳號？前往註冊
+    </router-link>
+
   </div>
 </template>
 
