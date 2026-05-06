@@ -3,10 +3,16 @@ package com.example.socialmedia.controller;
 import com.example.socialmedia.entity.User;
 import com.example.socialmedia.service.UserService;
 import com.example.socialmedia.dto.UserResponse;
+import com.example.socialmedia.dto.LoginRequest;
+import com.example.socialmedia.repository.UserRepository;
+import com.example.socialmedia.security.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.socialmedia.dto.LoginRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -14,6 +20,14 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    // =========================
+    // 註冊
+    // =========================
     @PostMapping("/register")
     public UserResponse register(@RequestBody User user) {
 
@@ -27,17 +41,22 @@ public class AuthController {
 
         return res;
     }
+
+    // =========================
+    // JWT 登入
+    // =========================
     @PostMapping("/login")
-    public UserResponse login(@RequestBody LoginRequest request) {
+    public Map<String, String> login(@RequestBody LoginRequest request) {
 
-        User user = userService.login(request.getPhone(), request.getPassword());
+        User user = userRepository.findByPhone(request.getPhone())
+                .orElseThrow(() -> new RuntimeException("帳號不存在"));
 
-        UserResponse res = new UserResponse();
-        res.setUserId(user.getUserId());
-        res.setUserName(user.getUserName());
-        res.setPhone(user.getPhone());
-        res.setEmail(user.getEmail());
+        if (!encoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("密碼錯誤");
+        }
 
-        return res;
+        String token = JwtUtil.generateToken(request.getPhone());
+
+        return Map.of("token", token);
     }
 }
