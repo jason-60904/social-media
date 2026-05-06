@@ -277,7 +277,8 @@ DB/
 
 ![login](photo/login.png)
 
-## 3. 啟動 Backend(強烈推薦在IntelliJ中直接run!!)
+## 3. 啟動 Backend(強烈推薦在IntelliJ中直接run!!或是使用jar 打包專案後再啟動，不然可能有環境問題)
+
 
 進入專案根目錄：
 
