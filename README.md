@@ -275,6 +275,8 @@ DB/
 
 ---
 
+![login](photo/login.png)
+
 ## 3. 啟動 Backend(強烈推薦在IntelliJ中直接run!!)
 
 進入專案根目錄：
@@ -324,7 +326,7 @@ http://localhost:5173
 ```
 
 ---
-
+![login](photo/home.png)
 # 專案特色
 
 - 前後端分離架構
