@@ -195,6 +195,45 @@ POST /api/comments
 
 GET /api/comments/post/{postId}
 
+
+# 環境需求
+
+- Java 17
+- MySQL 8+
+- Node.js
+- Maven
+
+---
+
+# 執行方式
+
+## 1. Clone 專案
+
+```bash
+git clone git@github.com:jason-60904/social-media.git
+```
+
+---
+
+# application.properties
+
+請至：
+
+```text
+social-media/src/main/resources/application.properties
+```
+
+修改自己的 MySQL 帳號密碼：
+
+```properties
+spring.datasource.username=你的MySQL username
+spring.datasource.password=你的MySQL密碼
+```
+
+---
+
+## 2. 建立資料庫
+
 ---
 
 # 資料庫初始化
@@ -219,38 +258,6 @@ data.sql 可直接初始化測試資料與測試帳號。
 | 0123456789 | 123456 |
 
 ---
-
-# application.properties
-
-請修改：
-
-```properties
-spring.datasource.username=你的MySQL帳號
-spring.datasource.password=你的MySQL密碼
-```
-
----
-
-# 環境需求
-
-- Java 17
-- MySQL 8+
-- Node.js
-- Maven
-
----
-
-# 執行方式
-
-## 1. Clone 專案
-
-```bash
-git clone git@github.com:jason-60904/social-media.git
-```
-
----
-
-## 2. 建立資料庫
 
 進入：
 
