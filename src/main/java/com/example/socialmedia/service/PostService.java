@@ -79,7 +79,8 @@ public class PostService {
     }
 
     public List<Post> getAllPosts() {
-        return postRepository.findAll();
+
+        return postRepository.getLatestPosts();
     }
 
     // ⭐ 更新（含 XSS）

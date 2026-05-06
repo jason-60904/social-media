@@ -12,6 +12,7 @@ import org.springframework.web.util.HtmlUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,15 +24,16 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
-    // 從 JWT 取當前使用者（phone）
+    //  從 JWT 取當前使用者（phone）
     private String getCurrentUserPhone() {
+
         return (String) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
     }
 
-    // 新增留言（自動帶 userId跟XSS 防護）
+    // 新增留言（JWT + XSS）
     public Comment createComment(Comment comment) {
 
         String phone = getCurrentUserPhone();
@@ -44,9 +46,18 @@ public class CommentService {
                 : HtmlUtils.htmlEscape(comment.getContent());
 
         comment.setContent(safeContent);
-        comment.setUserId(user.getUserId());   // ⭐ 不再相信前端
+
+        //  userId 從 JWT 來
+        comment.setUserId(user.getUserId());
+
         comment.setCreatedAt(LocalDateTime.now());
 
         return commentRepository.save(comment);
+    }
+
+    // 依貼文查留言（新功能）
+    public List<Comment> getCommentsByPost(Integer postId) {
+
+        return commentRepository.findByPostId(postId);
     }
 }
