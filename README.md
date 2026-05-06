@@ -18,7 +18,7 @@
 
 - 手機號碼註冊
 - JWT 登入驗證
-- 自動登入
+- 註冊後自動登入
 - 登出功能
 
 ---
@@ -48,6 +48,7 @@
 - 最新 / 熱門貼文切換
 - 即時刷新留言
 - JWT 自動帶入 userId
+- 留言局部刷新避免 Feed 跳動
 
 ---
 
@@ -91,11 +92,17 @@
 # 系統架構
 
 Frontend (Vue.js)
+
 ↓
+
 RESTful API
+
 ↓
+
 Spring Boot
+
 ↓
+
 MySQL
 
 ---
@@ -157,6 +164,20 @@ DB 資料夾內包含：
 - schema.sql
 - data.sql
 
+data.sql 可直接初始化測試資料與測試帳號，也可以透過下面的測試帳號於前端登入。
+
+---
+
+# 測試帳號
+
+系統提供測試資料，可直接登入：
+
+| phone | password |
+|---|---|
+| 0912345678 | 123456 |
+| 11111111111 | 123456 |
+| 0123456789 | 123456 |
+
 ---
 
 # 專案特色
@@ -171,6 +192,9 @@ DB 資料夾內包含：
 - Vue Router 單頁應用
 - Axios JWT 自動攜帶
 - 社群 Feed UX 設計
+- Enter 快捷發文 / 留言
+- JWT 自動控制 userId
+- 熱門貼文使用 Stored Procedure 計算
 
 ---
 
@@ -181,7 +205,6 @@ DB 資料夾內包含：
 ```bash
 mvn spring-boot:run
 ```
-
 ## Frontend
 ```bash
 cd social-media-frontend
